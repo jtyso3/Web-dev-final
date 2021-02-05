@@ -33,7 +33,7 @@ export default {
         this.updateActivites()
       }).catch( (err) =>{
         let msg=err.response.data.join(', ')
-        alert('Error adding student. \n')
+        alert('Error adding student. \n' + msg)
       })
     },
     updateActivites(){
