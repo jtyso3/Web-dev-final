@@ -37,7 +37,14 @@ export default {
     
     newActivityAdded(record){
       this.$activity_api.addActivity(record).then((record)=>{
+<<<<<<< HEAD
         this.updateActivities()
+=======
+        this.updateActivites()
+      }).catch( (err) =>{
+        let msg=err.response.data.join(', ')
+        alert('Error adding student. \n' + msg)
+>>>>>>> 11e3ba504e505b0eb81d7887326ace748da222ff
       })
     },
     recordDeleted(record) {
