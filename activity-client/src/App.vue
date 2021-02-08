@@ -3,7 +3,12 @@
     
     <activityInputs v-on:activity-added="newActivityAdded"> </activityInputs>
 
-    <activityTable></activityTable>
+    <!--  activity table uses activityRecordRow as component-->
+    <activityTable 
+    v-bind:records="records"
+    v-bind:record="record"
+    v-on:delete-activity='recordDeleted'
+    ></activityTable>
   </div> 
 </template>
 
@@ -20,23 +25,31 @@ export default {
   },
   data (){
     return{
-        records: [],
+        records: [], // used to create table data. 
+        record: ''  
     }
   },
   mounted(){
-    this.updateActivites()
+    // update activity table on start up. 
+    this.updateActivities()
   },
   methods:{
     
     newActivityAdded(record){
       this.$activity_api.addActivity(record).then((record)=>{
-        this.updateActivites()
-      }).catch( (err) =>{
-        let msg=err.response.data.join(', ')
-        alert('Error adding student. \n')
+        this.updateActivities()
       })
     },
-    updateActivites(){
+    recordDeleted(record) {
+      // record.id is parameter used the specify the unique entry to be deleted. 
+      this.$activity_api.deleteActivity( record.id ).then( () => {
+        // clears record var to stop it from builing up 
+        this.record = ''
+        // updates table with del activity selected gone.
+        this.updateActivities()  
+      })
+    },
+    updateActivities(){
       this.$activity_api.getAllActivities().then( records =>{
       this.records = records
       })

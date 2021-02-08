@@ -21,5 +21,11 @@ export default {
         return axios.patch(`${base_url}/${record.id}`, record).then( response =>{
             return response.data
         })
+    },
+    // deletes activity by id number. 
+    deleteActivity(id) {
+        return axios.delete(`${base_url}/${id}`).then( response => {
+            return response.data
+        })
     }
 }

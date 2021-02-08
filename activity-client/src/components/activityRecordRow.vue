@@ -1,31 +1,29 @@
 <template>
-    <div>
         <tr>
-            <td>{{records.dateString}}</td>
-            <td>{{records.hours}}</td>
-            <td>{{records.type}}</td>
-            <td>{{records.media}}</td>
-            <td>{{records.status}}</td>
-            <td>{{records.additional_comment}}</td>
+            <td>{{record.id}}</td>
+            <td>{{record.date}}</td>
+            <td>{{record.hours}}</td>
+            <td>{{record.activityType}}</td>
+            <td>{{record.media}}</td>
+            <td>{{record.status}}</td>
+            <td>{{record.additional_Comments}}</td>
+            <td>
+                <img class="delete-icon" v-on:click="deleteActivity" src="@/assets/delete.png">
+            </td>
         </tr>
-    </div>
 </template>
 
 <script>
 export default {
     name: 'activityRecordRow',
-    data(){
-        return{
-            records: ''
-        }
-        
+    props: {
+        record: Object
     },
     methods: {
-        showRecord (record) {
-            this.records = record
-        }
+        deleteActivity() {
+            this.$emit('delete-activity', this.record)
+            }
     }
-    
 }
 </script>
 

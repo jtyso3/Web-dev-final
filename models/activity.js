@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 
     let Activity = sequelize.define('Activity', {
         date:{
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
         }, hours: {
             type: DataTypes.TINYINT
         }, activityType: {
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         }, status: {
             type: DataTypes.STRING
-        }, additionalComments: {
+        }, additional_Comments: {
             type: DataTypes.STRING
         }
     })

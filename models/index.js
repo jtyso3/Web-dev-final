@@ -14,7 +14,7 @@ if (config.use_env_variable) {
 }
 
 let activityModel = require('./activity')(sequelize, DataTypes)
-db[activityModel.date] = activityModel
+db[activityModel.name] = activityModel
 
 db.sequelize = sequelize
 db.Sequelize = Sequelize

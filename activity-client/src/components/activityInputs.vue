@@ -20,7 +20,7 @@
         <div class="form-group">
             <label class="form-label" for="type">What type?</label>
 
-            <select class="form-control" v-model='type' name="">
+            <select class="form-control" v-model='type' id='type'>
                 <option v-bind:key="type" v-for='type in types'>{{type}}</option>
             </select>
                     <!-- element use v-model to connect to the types -->
@@ -48,12 +48,12 @@
                 <label class="form-check-label" for="status1">Completed</label>
 
                 <input id='status1'  class="form-check-input" type="radio" v-model='status' v-bind:value= 'status_choice.notCompleted'>
-                <label class="form-check-label" for="status2">Completed</label>
+                <label class="form-check-label" for="status2">Not Complete</label>
             </div>    
         </div>
         <div class="form-group">
             <label for="additional-input">Note: (Optional)</label>
-            <input type="text" name="Additional-input" value="" class="form-control" rows="5"  v-model='additional_comment'>
+            <input type="text" name="Additional-input" value="" class="form-control" rows="5"  v-model.trim='additional_comment'>
         </div>
         <div>
             <button class="btn btn-primary mt-2" type="button" v-on:click='submit'>Add record</button>
@@ -76,12 +76,8 @@ export default {
             media: '',
             status: '',
             additional_comment: '',
-            testvar: '',
-            testvar1: '',
-        
-            
-
-            
+           
+               
             types: ['Sketching', 'Drawing', 'Painting'],
             media_type: {
                 traditional: 'Traditional',
@@ -120,10 +116,10 @@ export default {
                 let record = {
                     date: this.dateString,
                     hours: this.hours,
-                    type: this.type,
+                    activityType: this.type,
                     media: this.media,
                     status: this.status,
-                    additional_comments: this.additional_comment,
+                    additional_Comments: this.additional_comment,
                 }
                 // on submit() activity record is activated, as with value of record.
                 this.$emit('activity-added', record)
@@ -132,7 +128,7 @@ export default {
                 this.type = ''
                 this.media= ''
                 this.status = ''
-                this.additional_comments = ''
+                this.additional_comment = ''
                 this.dateString = ''
               }
             }

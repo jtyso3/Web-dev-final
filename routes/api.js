@@ -25,4 +25,12 @@ router.post('/activity', (req, res, next) =>{
     })
 })
 
+router.delete('/activity/:id', (req, res, next) => {
+    // maps which record entry to delete by id number. 
+    Activity.destroy( {where: {id: req.params.id}})
+    .then( rowsModified => {
+        return res.send('ok')
+    }).catch(err => next(err) )
+})
+
 module.exports = router

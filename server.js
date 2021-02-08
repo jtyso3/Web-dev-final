@@ -1,7 +1,7 @@
 let express = require('express')
 // body-parser converts data sent in a request to JSON
 let bodyParser = require('body-parser')
-let api_routes = require('./routes/api.js')
+let api_routes = require('./routes/api')
 //let path = require('path')
 
 //app configuration
