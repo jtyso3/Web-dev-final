@@ -9,6 +9,11 @@
     v-bind:record="record"
     v-on:delete-activity='recordDeleted'
     ></activityTable>
+
+    <activityChart 
+      v-bind:records="records"
+      v-bind:totalHours="totalHours"
+    ></activityChart>
   </div> 
 </template>
 
@@ -16,17 +21,20 @@
 
 import activityInputs from './components/activityInputs'
 import activityTable from './components/activityTable'
+import activityChart from './components/activityChart'
 
 export default {
   name: 'app',
   components: {
     activityInputs,
     activityTable,
+    activityChart
   },
   data (){
     return{
         records: [], // used to create table data. 
-        record: ''  
+        record: '' ,
+        totalHours: {}
     }
   },
   mounted(){
@@ -34,17 +42,9 @@ export default {
     this.updateActivities()
   },
   methods:{
-    
     newActivityAdded(record){
       this.$activity_api.addActivity(record).then((record)=>{
-<<<<<<< HEAD
         this.updateActivities()
-=======
-        this.updateActivites()
-      }).catch( (err) =>{
-        let msg=err.response.data.join(', ')
-        alert('Error adding student. \n' + msg)
->>>>>>> 11e3ba504e505b0eb81d7887326ace748da222ff
       })
     },
     recordDeleted(record) {
@@ -56,9 +56,40 @@ export default {
         this.updateActivities()  
       })
     },
-    updateActivities(){
-      this.$activity_api.getAllActivities().then( records =>{
-      this.records = records
+    
+    totalSketchHours(records){
+          let sketchingHours = 0
+          records.forEach( activityObject => {
+            if (activityObject.activityType == "Sketching") {
+              sketchingHours += activityObject.hours
+              this.totalHours.sketch = sketchingHours
+            }
+          })
+      },
+      totalPaintHours(records){
+        let paintingHours = 0
+        records.forEach( activityObject =>{
+          if (activityObject.activityType == "Painting"){
+            paintingHours += activityObject.hours
+            this.totalHours.paint = paintingHours 
+          }
+        })
+      },
+      totalDrawHours(records){
+        let drawingHours = 0
+        records.forEach( activityObject =>{
+          if (activityObject.activityType == "Drawing"){
+            drawingHours += activityObject.hours
+            this.totalHours.draw = drawingHours
+            }
+          })
+        },
+      updateActivities(){
+        this.$activity_api.getAllActivities().then( records =>{
+          this.records = records
+          this.totalDrawHours(records)
+          this.totalPaintHours(records)
+          this.totalSketchHours(records)
       })
     }
 

@@ -1,43 +1,38 @@
-<template>
-    
-</template>
 
 <script>
-import {Doughnut } from 'vue-chartjs'
+import {Doughnut} from 'vue-chartjs'
+
+
 export default {
-    data() {
+    extends: Doughnut,
+    name: "activityChart",
+    props:{
+      totalHours: Object
+    },
+    data(){
         return {
         chartOptions: {
-            hoverBorderWidth: 20
+            hoverBorderWidth: 20, 
+            responsive: true,
+            maintainAspectRatio: false
         },
         chartData: {
             hoverBackgroundColor: "red",
             hoverBorderWidth: 10,
-            labels: ["Green", "Red", "Blue"],
+            labels: ["Painting", "Drawing", "Sketching"],
             datasets: [
                 {
-                label: "Data One",
-                backgroundColor: ["#41B883", "#E46651", "#00D8FF"],
-                data: [1, 10, 5]
+                data: [this.totalHours.paint, this.totalHours.draw, this.totalHours.sketch], // need to add total hours of each category
+                label: " Total Hours",
+                backgroundColor: ["#41B883", "#E46651", "#00D8FF"]
                 }
             ]
-        }
-    };
-  }    
+        },
+      }
+    },
+    mounted(){
+      this.renderChart(this.chartData, this.chartOptions)
+    },   
 }
 </script>
 
-import { Doughnut, mixins } from "vue-chartjs";
-export default {
-  extends: Doughnut,
-  props: ["data", "options"],
-  mounted() {
-    // this.chartData is created in the mixin.
-    // If you want to pass options please create a local options object
-    this.renderChart(this.data, {
-      borderWidth: "10px",
-      hoverBackgroundColor: "red",
-      hoverBorderWidth: "10px"
-    });
-  }
-};

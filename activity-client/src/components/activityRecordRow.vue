@@ -19,6 +19,11 @@ export default {
     props: {
         record: Object
     },
+    data (){
+        return{
+            hours: '',
+        }
+    },
     methods: {
         deleteActivity() {
             this.$emit('delete-activity', this.record)
